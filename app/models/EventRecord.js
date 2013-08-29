@@ -2,9 +2,10 @@ exports.definition = {
  
     config: {
         "columns": {
-            ms: "INTEGER",
+            eventTime: "TEXT",
             type: "TEXT",            
-            event: "TEXT"
+            event: "TEXT",
+            paused: "TEXT"
         },
         "defaults": {
         },
@@ -26,11 +27,13 @@ exports.definition = {
     extendCollection: function(Collection) {        
         _.extend(Collection.prototype, {
  
-            // extended functions go here           
-
+    	    comparator : function(m) {
+        	    return -1 * parseInt(m.get('eventTime'));
+            }
+            
         }); // end extend
  
         return Collection;
     }
  
-}
+};

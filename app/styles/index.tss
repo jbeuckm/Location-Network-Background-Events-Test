@@ -6,3 +6,18 @@ TableViewRow: {
 Label: {
 	left: 5
 }
+
+".agoLabel": {
+	font: {
+		fontSize: 10
+	}
+}
+".typeLabel": {
+	font: {
+		fontWeight: "bold"
+	}
+}
+
+".paused": {
+	backgroundColor: "#bbb"
+}

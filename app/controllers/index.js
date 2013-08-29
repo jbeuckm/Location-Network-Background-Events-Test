@@ -5,22 +5,34 @@ $.index.open();
 var records = Alloy.Collections.EventRecord;
 records.fetch();
 
-Ti.Network.addEventListener("change", recordEvent);
-
 function recordEvent(e) {
     var d = new Date();
+    
     var m = new Alloy.createModel("EventRecord", {
-        ms: d.getTime(),
+        eventTime: ""+d.getTime(),
         type: e.type,
-        event: JSON.stringify(e)
+        event: JSON.stringify(e),
+        paused: paused
     });
     m.save();
     records.fetch();
 }
 
 
+Ti.Network.addEventListener("change", recordEvent);
+
 Ti.Geolocation.setTrackSignificantLocationChange(true);
 Ti.Geolocation.addEventListener("location", recordEvent);
+
+var paused = false;
+Ti.App.addEventListener("pause", function(e) {
+	paused = true;
+	recordEvent(e);
+});
+Ti.App.addEventListener("resume", function(e) {
+	paused = false;
+	recordEvent(e);
+});
 
 
 function transformEventRecord(r) {
@@ -28,9 +40,26 @@ function transformEventRecord(r) {
     
     var e = JSON.parse(obj.event);
 
-    obj.ago = moment(obj.ms).fromNow();
+	var d = new Date();
+	d.setTime(obj.eventTime);
+    obj.ago = moment(d).fromNow();
     
-    obj.label = e.type;
+    switch(e.type) {
+    	case "change": 
+    		obj.label = e.networkTypeName;
+    		break;
+    	case "location": 
+    		obj.label = e.accuracy;
+    		break;
+    	default:
+    		obj.label = e.type;
+    		break;
+    };
+
+console.log(obj.paused);
+	if (obj.paused) {
+		obj.rowClass = "paused";
+	}
     
     return obj;
 }
