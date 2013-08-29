@@ -1,0 +1,8 @@
+
+TableViewRow: {
+	layout: "horizontal",
+	height: 30
+}
+Label: {
+	left: 5
+}

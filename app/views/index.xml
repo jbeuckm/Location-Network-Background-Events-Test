@@ -1,0 +1,15 @@
+<Alloy>
+	
+	<Collection src="EventRecord"/>
+	
+	<Window class="container">
+
+		<TableView dataCollection="EventRecord" dataTransform="transformEventRecord">
+			<Widget id="ptr" src="nl.fokkezb.pullToRefresh" onRelease="update" />
+			<TableViewRow hasDetail="true" modelId="{alloy_id}" onClick="clickRow">
+				<Label text="{ago}"/>
+				<Label text="{type}"/>
+			</TableViewRow>
+		</TableView>
+	</Window>
+</Alloy>
