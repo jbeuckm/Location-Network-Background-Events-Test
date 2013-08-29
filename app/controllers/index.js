@@ -26,13 +26,15 @@ Ti.Geolocation.addEventListener("location", recordEvent);
 
 var paused = false;
 Ti.App.addEventListener("pause", function(e) {
+	recordEvent(e);
 	paused = true;
-	recordEvent(e);
 });
+Ti.App.addEventListener("paused", recordEvent);
 Ti.App.addEventListener("resume", function(e) {
-	paused = false;
 	recordEvent(e);
+	paused = false;
 });
+Ti.App.addEventListener("resumed", recordEvent);
 
 
 function transformEventRecord(r) {
@@ -58,6 +60,7 @@ function transformEventRecord(r) {
 
 console.log(obj.paused);
 	if (obj.paused) {
+console.log('rowClass');
 		obj.rowClass = "paused";
 	}
     

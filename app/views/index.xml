@@ -6,7 +6,7 @@
 
 		<TableView dataCollection="EventRecord" dataTransform="transformEventRecord">
 			<Widget id="ptr" src="nl.fokkezb.pullToRefresh" onRelease="update" />
-			<TableViewRow hasDetail="true" modelId="{alloy_id}" onClick="clickRow" class="{rowClass}">
+			<TableViewRow hasDetail="true" modelId="{alloy_id}" onClick="clickRow" class="{paused}">
 				<Label class="agoLabel" text="{ago}"/>
 				<Label class="typeLabel" text="{type}"/>
 			</TableViewRow>
